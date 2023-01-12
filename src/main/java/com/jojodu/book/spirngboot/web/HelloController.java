@@ -1,4 +1,4 @@
-package com.jojodu.book.spirngboot;
+package com.jojodu.book.spirngboot.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

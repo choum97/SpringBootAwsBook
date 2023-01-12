@@ -1,6 +1,7 @@
 package com.jojodu.book.spirngboot;
 
 
+import com.jojodu.book.spirngboot.web.HelloController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
