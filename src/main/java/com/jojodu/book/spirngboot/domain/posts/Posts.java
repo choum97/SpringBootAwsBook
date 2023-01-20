@@ -1,6 +1,7 @@
 package com.jojodu.book.spirngboot.domain.posts;
 
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
+@Getter
 public class Posts {
     
     // 부트 2.0버전에서는 GenerationType.IDENTITY해야 오토인크리먼트 된다함
@@ -37,7 +39,4 @@ public class Posts {
         this.content = content;
         this.author = author;
     }
-
- 
-
 }
