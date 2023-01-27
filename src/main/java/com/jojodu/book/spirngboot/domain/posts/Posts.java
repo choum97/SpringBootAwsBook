@@ -18,7 +18,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Getter
-public class Posts {
+public class Posts extends BaseTimeEntity {
     
     // 부트 2.0버전에서는 GenerationType.IDENTITY해야 오토인크리먼트 된다함
     @Id
