@@ -1,7 +1,7 @@
 package com.jojodu.book.spirngboot.web.dto;
 
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 public class HelloResponseDtoTest {
 
     @Test
