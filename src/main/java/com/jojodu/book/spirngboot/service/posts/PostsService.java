@@ -50,4 +50,26 @@ public class PostsService {
                 .map(PostsListResponseDto::new)
                 .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void delete(Long id){
+        //orElseThrow : 코드 가독성 향상
+        //              https://velog.io/@chiyongs/orElseThrow
+
+        Posts posts = postsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
+
+        // 예외 처리 하는 방법
+        // RuntimeException : 모든 예외 처리 가능, 세분화 불가
+        // IllegalArgumentException : 어떤 에러 발생해도 내가 정의한 에러로 던지기 가능
+        // 다른방법 : 커스텀 익셉션으로, 모든 익셉션에 대해서 함수 작성
+        // 출처 : https://www.saichoiblog.com/exception/
+
+
+        //JPARepository에서 이미 delete 메소드 지원해서 활용 한 것이라 함
+        //존재하는 posts인지 확인을 위해 엔티티조회 후 그대로 삭제
+        //deleteById 메소드 이용하면 id로 삭제 가능
+        postsRepository.delete(posts);
+    }
+
 }
