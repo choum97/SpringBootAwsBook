@@ -4,14 +4,14 @@
         <div class="row">
             <div class="col-md-6">
                 <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
-                {{#userName}}
-                    Logged in as: <span id="user">{{userName}}</span>
+                {{#users}}
+                    Logged in as: <span id="user">{{users.Name}} / {{users.Email}}  </span>
                     <a href="/logout" class="btn btn-info active" role="button">Logout</a>
-                {{/userName}}
+                {{/users}}
 
-                {{^userName}}
+                {{^users}}
                     <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
-                {{/userName}}
+                {{/users}}
             </div>
         </div><br>
         <!-- 목록 출력 영역 -->

@@ -1,5 +1,6 @@
 package com.jojodu.book.spirngboot.domain.posts;
 
+import com.jojodu.book.spirngboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

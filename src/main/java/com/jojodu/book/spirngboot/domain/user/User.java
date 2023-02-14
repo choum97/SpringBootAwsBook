@@ -1,15 +1,18 @@
 package com.jojodu.book.spirngboot.domain.user;
 
+
+import com.jojodu.book.spirngboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Getter
 @NoArgsConstructor
+@Getter
 @Entity
-public class User {
+@Table(name="users")
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
