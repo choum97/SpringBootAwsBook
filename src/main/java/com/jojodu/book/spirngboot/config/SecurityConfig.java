@@ -1,4 +1,4 @@
-package com.jojodu.book.spirngboot.config.auth;
+package com.jojodu.book.spirngboot.config;
 
 import com.jojodu.book.spirngboot.config.auth.CustomOAuth2UserService;
 import com.jojodu.book.spirngboot.domain.user.Role;
@@ -12,12 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final CustomOAuth2UserService customOAuth2UserService;
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .headers().frameOptions().disable()//h2 콘솔 화면을 사용하기 위해서 disable
+                .headers()
+                //.frameOptions().disable()//h2 콘솔 화면을 사용하기 위해서 disable
                 .and()
+
                     .authorizeRequests()// 권한 관리를 설정하는 옵션의 시작점, authorizeRequests가 선언되어야 antMatchers 사용가능
                     //antMatchers : 권한관리 대상 옵션, url, http 메소드별로 관리 가능
                     .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll() // permitAll() : 전체 열람 권한 준 것
