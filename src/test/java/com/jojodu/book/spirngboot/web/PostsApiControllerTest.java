@@ -89,7 +89,7 @@ public class PostsApiControllerTest {
     }
 
 
-    @WithMockUser(roles = "USER")
+    @WithMockUser(roles="USER")
     @Test
     public void posts_수정된다() throws Exception {
         // given

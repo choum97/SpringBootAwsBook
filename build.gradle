@@ -50,4 +50,6 @@ dependencies {
 	//스프링 시큐리티 테스트를 위한 여러 도구 지원한다 함
 	testImplementation 'org.springframework.security:spring-security-test'
 
+	implementation 'org.springframework.session:spring-session-jdbc'
+
 }
