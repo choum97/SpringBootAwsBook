@@ -1,6 +1,7 @@
 package com.jojodu.book.spirngboot.web.dto;
 
 import com.jojodu.book.spirngboot.domain.posts.Posts;
+import com.jojodu.book.spirngboot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,9 +11,10 @@ import lombok.NoArgsConstructor;
 public class PostsSaveRequestDto {
     private String title;
     private String content;
-    private String author;
+    private User author;
+
     @Builder
-    public PostsSaveRequestDto(String title, String content, String author){
+    public PostsSaveRequestDto(String title, String content, User author){
         this.title = title;
         this.content = content;
         this.author = author;
@@ -22,7 +24,7 @@ public class PostsSaveRequestDto {
         return Posts.builder()
                 .title(title)
                 .content(content)
-                .author(author)
+                .user(author)
                 .build();
     }
 }

@@ -1,11 +1,15 @@
 package com.jojodu.book.spirngboot.domain.posts;
 
 import com.jojodu.book.spirngboot.domain.BaseTimeEntity;
+import com.jojodu.book.spirngboot.domain.likes.PostLike;
+import com.jojodu.book.spirngboot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //Posts는 실제 DB 테이블과 매칭될 클래스, Entity클래스라고도 함
 /*
@@ -24,6 +28,7 @@ public class Posts extends BaseTimeEntity {
     // 부트 2.0버전에서는 GenerationType.IDENTITY해야 오토인크리먼트 된다함
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "posts_id")
     private Long id; // 해당 테이블의 PK필드
 
     @Column(length = 500, nullable = false)
@@ -32,17 +37,27 @@ public class Posts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    private String author;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "users_id")
+    private User user;
+
+    //mappedBy = "posts" : 외래키를 갖는 쪽 즉, 연관관계의 주인이 되는 쪽을 정해주는 것
+    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+    private List<PostLike> likes = new ArrayList<>();
 
     @Builder
-    public Posts(String title, String content, String author){
+    public Posts(String title, String content, User user) {
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.user = user;
     }
 
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public String getAuthor() {
+        return user.getEmail();
     }
 }

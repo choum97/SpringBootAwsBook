@@ -11,4 +11,9 @@ public interface PostsRepository extends JpaRepository<Posts, Long> {
 
     @Query("SELECT p FROM Posts p ORDER BY p.id DESC")
     List<Posts> findAllDesc();
+
+
+    //해당 게시글의 좋아요 수를 가져오는 메서드
+
+
 }

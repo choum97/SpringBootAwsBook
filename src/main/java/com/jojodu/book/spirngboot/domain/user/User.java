@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -15,6 +17,7 @@ import javax.persistence.*;
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "users_id")
     private Long id;
 
     @Column(nullable = false)
@@ -49,4 +52,5 @@ public class User extends BaseTimeEntity {
     public String getRoleKey() {
         return this.role.getKey();
     }
+
 }
