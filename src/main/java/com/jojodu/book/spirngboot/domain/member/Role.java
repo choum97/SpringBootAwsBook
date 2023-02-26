@@ -1,4 +1,4 @@
-package com.jojodu.book.spirngboot.domain.user;
+package com.jojodu.book.spirngboot.domain.member;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

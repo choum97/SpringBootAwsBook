@@ -1,7 +1,7 @@
 package com.jojodu.book.spirngboot.config;
 
 import com.jojodu.book.spirngboot.config.auth.CustomOAuth2UserService;
-import com.jojodu.book.spirngboot.domain.user.Role;
+import com.jojodu.book.spirngboot.domain.member.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;

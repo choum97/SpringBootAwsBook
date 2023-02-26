@@ -1,7 +1,7 @@
 package com.jojodu.book.spirngboot.config.auth.dto;
 
-import com.jojodu.book.spirngboot.domain.user.Member;
-import com.jojodu.book.spirngboot.domain.user.Role;
+import com.jojodu.book.spirngboot.domain.member.Member;
+import com.jojodu.book.spirngboot.domain.member.Role;
 import lombok.Builder;
 import lombok.Getter;
 

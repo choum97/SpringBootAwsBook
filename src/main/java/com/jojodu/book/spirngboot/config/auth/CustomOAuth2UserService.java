@@ -2,8 +2,8 @@ package com.jojodu.book.spirngboot.config.auth;
 
 import com.jojodu.book.spirngboot.config.auth.dto.OAuthAttributes;
 import com.jojodu.book.spirngboot.config.auth.dto.SessionUser;
-import com.jojodu.book.spirngboot.domain.user.Member;
-import com.jojodu.book.spirngboot.domain.user.MemberRepository;
+import com.jojodu.book.spirngboot.domain.member.Member;
+import com.jojodu.book.spirngboot.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;

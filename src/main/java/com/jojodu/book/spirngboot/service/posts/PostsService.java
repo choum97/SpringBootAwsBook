@@ -55,7 +55,6 @@ public class PostsService {
     public void delete(Long id){
         //orElseThrow : 코드 가독성 향상
         //              https://velog.io/@chiyongs/orElseThrow
-
         Posts posts = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id = " + id));
 

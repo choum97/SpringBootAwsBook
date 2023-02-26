@@ -1,7 +1,7 @@
 package com.jojodu.book.spirngboot.web.dto;
 
 import com.jojodu.book.spirngboot.domain.posts.Posts;
-import com.jojodu.book.spirngboot.domain.user.Member;
+import com.jojodu.book.spirngboot.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

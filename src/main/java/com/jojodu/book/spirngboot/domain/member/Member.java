@@ -1,4 +1,4 @@
-package com.jojodu.book.spirngboot.domain.user;
+package com.jojodu.book.spirngboot.domain.member;
 
 
 import com.jojodu.book.spirngboot.domain.BaseTimeEntity;
@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity
-
 public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

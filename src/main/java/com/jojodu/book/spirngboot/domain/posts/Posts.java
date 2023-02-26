@@ -2,7 +2,7 @@ package com.jojodu.book.spirngboot.domain.posts;
 
 import com.jojodu.book.spirngboot.domain.BaseTimeEntity;
 import com.jojodu.book.spirngboot.domain.likes.PostsLike;
-import com.jojodu.book.spirngboot.domain.user.Member;
+import com.jojodu.book.spirngboot.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,7 +42,8 @@ public class Posts extends BaseTimeEntity {
     private Member member;
 
     //mappedBy = "posts" : 외래키를 갖는 쪽 즉, 연관관계의 주인이 되는 쪽을 정해주는 것
-    @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
+    //OneToMany 관계에서 fetch = FetchType.LAZY는 기본옵션이지만 명시해주는 것을 권장함
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "posts", cascade = CascadeType.ALL)
     private List<PostsLike> postsLikes = new ArrayList<>();
 
     @Builder

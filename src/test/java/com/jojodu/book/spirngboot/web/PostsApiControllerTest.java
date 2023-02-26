@@ -3,8 +3,8 @@ package com.jojodu.book.spirngboot.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jojodu.book.spirngboot.domain.posts.Posts;
 import com.jojodu.book.spirngboot.domain.posts.PostsRepository;
-import com.jojodu.book.spirngboot.domain.user.Role;
-import com.jojodu.book.spirngboot.domain.user.Member;
+import com.jojodu.book.spirngboot.domain.member.Role;
+import com.jojodu.book.spirngboot.domain.member.Member;
 import com.jojodu.book.spirngboot.web.dto.PostsSaveRequestDto;
 import com.jojodu.book.spirngboot.web.dto.PostsUpdateRequestDto;
 import org.junit.jupiter.api.AfterEach;
@@ -68,7 +68,6 @@ public class PostsApiControllerTest {
     public void Posts_등록된다() throws Exception {
         // given
         Member author = new Member("작성자 이름", "작성자 이메일", null, Role.USER);
-
         String title = "title";
         String content = "content";
 
@@ -92,14 +91,11 @@ public class PostsApiControllerTest {
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
 
-
     @WithMockUser(roles="USER")
     @Test
     public void posts_수정된다() throws Exception {
         // given
         Member author = new Member("작성자 이름", "작성자 이메일", null, Role.USER); // 작성자 정보를 가진 User 엔티티 생성
-
-
         Posts savedPosts = postsRepository.save(Posts.builder()
                 .title("title")
                 .content("content")

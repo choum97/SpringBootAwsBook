@@ -2,7 +2,7 @@ package com.jojodu.book.spirngboot.config.auth.dto;
 
 
 
-import com.jojodu.book.spirngboot.domain.user.Member;
+import com.jojodu.book.spirngboot.domain.member.Member;
 import lombok.Getter;
 import java.io.Serializable;
 
