@@ -1,7 +1,7 @@
 package com.jojodu.book.spirngboot.config.auth.dto;
 
+import com.jojodu.book.spirngboot.domain.user.Member;
 import com.jojodu.book.spirngboot.domain.user.Role;
-import com.jojodu.book.spirngboot.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -42,8 +42,8 @@ public class OAuthAttributes {
     //             엔티티 생성하는 시점은 처음 가입할 때
     //             가입시 기본 권한을 GUEST로 주기위해서 role 빌더 값에는 Role.GUEST를 사용한다 함
     //             OAuthAttributes 클래스 생성이 끝났으면 같은 패키지에 SessionUser 클래스를 생성
-    public User toEntity() {
-        return User.builder()
+    public Member toEntity() {
+        return Member.builder()
                 .name(name)
                 .email(email)
                 .picture(picture)

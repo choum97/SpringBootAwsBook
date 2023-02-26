@@ -1,8 +1,8 @@
 package com.jojodu.book.spirngboot.domain.posts;
 
 import com.jojodu.book.spirngboot.domain.BaseTimeEntity;
-import com.jojodu.book.spirngboot.domain.likes.PostLike;
-import com.jojodu.book.spirngboot.domain.user.User;
+import com.jojodu.book.spirngboot.domain.likes.PostsLike;
+import com.jojodu.book.spirngboot.domain.user.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,19 +37,19 @@ public class Posts extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_id")
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     //mappedBy = "posts" : 외래키를 갖는 쪽 즉, 연관관계의 주인이 되는 쪽을 정해주는 것
     @OneToMany(mappedBy = "posts", cascade = CascadeType.ALL)
-    private List<PostLike> likes = new ArrayList<>();
+    private List<PostsLike> postsLikes = new ArrayList<>();
 
     @Builder
-    public Posts(String title, String content, User user) {
+    public Posts(String title, String content, Member member) {
         this.title = title;
         this.content = content;
-        this.user = user;
+        this.member = member;
     }
 
     public void update(String title, String content) {
@@ -58,6 +58,6 @@ public class Posts extends BaseTimeEntity {
     }
 
     public String getAuthor() {
-        return user.getEmail();
+        return member.getEmail();
     }
 }

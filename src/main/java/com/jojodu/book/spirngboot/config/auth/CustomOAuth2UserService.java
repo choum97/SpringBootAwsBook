@@ -2,8 +2,8 @@ package com.jojodu.book.spirngboot.config.auth;
 
 import com.jojodu.book.spirngboot.config.auth.dto.OAuthAttributes;
 import com.jojodu.book.spirngboot.config.auth.dto.SessionUser;
-import com.jojodu.book.spirngboot.domain.user.User;
-import com.jojodu.book.spirngboot.domain.user.UserRepository;
+import com.jojodu.book.spirngboot.domain.user.Member;
+import com.jojodu.book.spirngboot.domain.user.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -20,7 +20,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -36,7 +36,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         //OAuthAttributes : OAuth2UserService를 통해 가져온 OAuth2User의 attribute를 담을 클래스 , 다른 소셜로그인도 이 클래스 사용한다함
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        User user = saveOrUpdate(attributes);
+        Member member = saveOrUpdate(attributes);
 
         // SessionUser : 사용자 정보 저장하기위한 DTO클래스
         //  User 클래스를 사용하면 안되는지?
@@ -46,17 +46,17 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         //    자식 엔티티를 갖고 있다면 직렬화 대상에 자식까지 포함되기에 성능이슈, 부수효과가 발생할 수 있음
         // 4. 따라서 직렬화 기능을 가진 세션 DTO를 하나 추가로 만드는 것이 운영 및 유지보수에 도움이 된다 함
 
-        httpSession.setAttribute("user", new SessionUser(user));
+        httpSession.setAttribute("user", new SessionUser(member));
 
-        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())), attributes.getAttributes(), attributes.getNameAttributeKey());
+        return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(member.getRoleKey())), attributes.getAttributes(), attributes.getNameAttributeKey());
     }
 
 
-    private User saveOrUpdate(OAuthAttributes attributes) {
-        User user = userRepository.findByEmail(attributes.getEmail())
+    private Member saveOrUpdate(OAuthAttributes attributes) {
+        Member member = memberRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
-        return userRepository.save(user);
+        return memberRepository.save(member);
     }
 
 }

@@ -2,6 +2,7 @@ package com.jojodu.book.spirngboot.domain.user;
 
 
 import com.jojodu.book.spirngboot.domain.BaseTimeEntity;
+import com.jojodu.book.spirngboot.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name="users")
-public class User extends BaseTimeEntity {
+
+public class Member extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "users_id")
+    @Column(name = "member_id")
     private Long id;
 
     @Column(nullable = false)
@@ -35,15 +36,18 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private Role role;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="member", cascade = CascadeType.ALL)
+    private List<Posts> posts = new ArrayList<Posts>();
+
     @Builder
-    public User(String name, String email, String picture, Role role) {
+    public Member(String name, String email, String picture, Role role) {
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.role = role;
     }
 
-    public User update(String name, String picture) {
+    public Member update(String name, String picture) {
         this.name = name;
         this.picture = picture;
         return this;
