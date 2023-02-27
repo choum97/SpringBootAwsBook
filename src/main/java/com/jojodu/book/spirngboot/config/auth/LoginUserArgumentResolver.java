@@ -11,6 +11,15 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpSession;
 
+
+/*
+@Component : Spring에서 관리되는 객체임을 표시하기 위해 사용하는 가장 기본적인 annotation
+             객체를 만드는 가장 기본적인 어노테이션
+             컴포넌트 스캔의 대상이 되어 어플리케이션 컨텍스트에 스프링 빈으로 등록됨
+@Controller : Presentation Layer, mvc패턴에서 컨트롤러 역할 하는 클래스에 사용
+@Service : 	Business Layer
+@Repository : Persistence Layer, 영속성을 가지는 속성(파일, 데이터베이스 등), DB에 접근하는 코드
+* */
 @RequiredArgsConstructor
 @Component
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
