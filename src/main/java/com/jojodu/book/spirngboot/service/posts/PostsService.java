@@ -1,21 +1,26 @@
 package com.jojodu.book.spirngboot.service.posts;
 
+import com.jojodu.book.spirngboot.domain.likes.PostsLike;
+import com.jojodu.book.spirngboot.domain.likes.PostsLikeRepository;
+import com.jojodu.book.spirngboot.domain.member.Member;
+import com.jojodu.book.spirngboot.domain.member.MemberRepository;
 import com.jojodu.book.spirngboot.domain.posts.Posts;
 import com.jojodu.book.spirngboot.domain.posts.PostsRepository;
-import com.jojodu.book.spirngboot.web.dto.PostsListResponseDto;
 import com.jojodu.book.spirngboot.web.dto.PostsResponseDto;
 import com.jojodu.book.spirngboot.web.dto.PostsSaveRequestDto;
 import com.jojodu.book.spirngboot.web.dto.PostsUpdateRequestDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 //import javax.transaction.Transactional; 아래로 변경, readOnly = true 사용 가능, 어노테이션 옵션 허용안해서 그런거라 함
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 /*
 Lombok : 자바에서 @Getter, @Setter 같은 annotation 기반으로 멤버 변수에 대한
@@ -79,6 +84,8 @@ Autowired는 필드주입방식의 의존성 관리 방법
 @Service
 public class PostsService {
     private final PostsRepository postsRepository;
+    private final MemberRepository memberRepository;
+    private final PostsLikeRepository postsLikeRepository;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto){
@@ -99,14 +106,26 @@ public class PostsService {
         Posts entity = postsRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id : " + id));
 
-        return new PostsResponseDto(entity);
+        return new PostsResponseDto(entity, postsLikeRepository.countByPostsId(id) ,checkLikedByMe(id));
     }
     
     @Transactional(readOnly = true) // readOnly = true : 조회 속도 개선, 등록 수정 삭제 기능이 없는 서비스 메소드에 추천
-    public List<PostsListResponseDto> findAllDesc() {
-        return postsRepository.findAllDesc().stream()
+    public List<PostsResponseDto> findAllDesc() {
+/*        return postsRepository.findAllDesc().stream()
                 .map(PostsListResponseDto::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList());*/
+        List<Posts> postsList = postsRepository.findAll();
+        List<PostsResponseDto> postsResponseDtoList = new ArrayList<>();
+
+        for (Posts posts : postsList) {
+            Long likesCount = postsLikeRepository.countByPostsId(posts.getId());
+            boolean likedByMe = checkLikedByMe(posts.getId());
+
+            PostsResponseDto postsResponseDto = new PostsResponseDto(posts, likesCount, likedByMe);
+            postsResponseDtoList.add(postsResponseDto);
+        }
+
+        return postsResponseDtoList;
     }
 
     @Transactional
@@ -127,6 +146,18 @@ public class PostsService {
         //존재하는 posts인지 확인을 위해 엔티티조회 후 그대로 삭제
         //deleteById 메소드 이용하면 id로 삭제 가능
         postsRepository.delete(posts);
+    }
+
+    private boolean checkLikedByMe(Long postsId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
+            Member member = memberRepository.findByEmail(authentication.getName())
+                    .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. email=" + authentication.getName()));
+
+            Optional<PostsLike> postsLike = postsLikeRepository.findByPostsIdAndMemberId(postsId, member.getId());
+            return postsLike.isPresent();
+        }
+        return false;
     }
 
 }

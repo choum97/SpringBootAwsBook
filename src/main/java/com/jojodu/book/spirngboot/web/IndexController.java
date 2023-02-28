@@ -5,6 +5,8 @@ import com.jojodu.book.spirngboot.config.auth.dto.SessionUser;
 import com.jojodu.book.spirngboot.service.posts.PostsService;
 import com.jojodu.book.spirngboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,17 @@ public class IndexController {
     }
 
     @GetMapping("/posts/save")
-    public String postsSave() {
+    public String postsSave(Model model, @LoginUser SessionUser user) {
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (user != null) {
+            model.addAttribute("users", user);
+        }
+/*
+        System.out.println(authentication.getName());
+        System.out.println(authentication.getDetails());
+        System.out.println(authentication.getAuthorities());
+        System.out.println(authentication.getPrincipal());*/
+
         return "posts-save";
     }
 
