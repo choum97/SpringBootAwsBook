@@ -1,5 +1,9 @@
 package com.jojodu.book.spirngboot.web;
 
+import com.jojodu.book.spirngboot.config.auth.LoginUser;
+import com.jojodu.book.spirngboot.config.auth.dto.SessionUser;
+import com.jojodu.book.spirngboot.domain.member.Member;
+import com.jojodu.book.spirngboot.domain.posts.Posts;
 import com.jojodu.book.spirngboot.service.posts.PostsService;
 import com.jojodu.book.spirngboot.web.dto.PostsResponseDto;
 import com.jojodu.book.spirngboot.web.dto.PostsSaveRequestDto;
@@ -20,8 +24,11 @@ public class PostsApiController {
     * 삭제 : DELETE
      */
     @PostMapping("/api/v1/posts")
-    public Long save(@RequestBody PostsSaveRequestDto requestDto){
-        return postsService.save(requestDto);
+    public Long save(@RequestBody PostsSaveRequestDto requestDto,  @LoginUser SessionUser user){
+        Member member = postsService.findMemberById(user.getId());
+        Posts posts = requestDto.toEntity(member);
+
+        return postsService.save(posts);
     }
 
     @PutMapping("/api/v1/posts/{id}")
