@@ -30,15 +30,16 @@ public class IndexController {
 
     @GetMapping("/posts/save")
     public String postsSave(Model model, @LoginUser SessionUser user) {
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (user != null) {
             model.addAttribute("users", user);
         }
-/*
+
+
         System.out.println(authentication.getName());
         System.out.println(authentication.getDetails());
-        System.out.println(authentication.getAuthorities());
-        System.out.println(authentication.getPrincipal());*/
+        System.out.println(authentication.getAuthorities()); //[ROLE_GUEST]
+        System.out.println(authentication.getPrincipal()); //
 
         return "posts-save";
     }

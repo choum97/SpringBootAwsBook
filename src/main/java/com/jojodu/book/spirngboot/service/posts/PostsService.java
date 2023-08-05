@@ -7,7 +7,6 @@ import com.jojodu.book.spirngboot.domain.member.MemberRepository;
 import com.jojodu.book.spirngboot.domain.posts.Posts;
 import com.jojodu.book.spirngboot.domain.posts.PostsRepository;
 import com.jojodu.book.spirngboot.web.dto.PostsResponseDto;
-import com.jojodu.book.spirngboot.web.dto.PostsSaveRequestDto;
 import com.jojodu.book.spirngboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -88,8 +87,8 @@ public class PostsService {
     private final PostsLikeRepository postsLikeRepository;
 
     @Transactional
-    public Long save(PostsSaveRequestDto requestDto){
-        return postsRepository.save(requestDto.toEntity()).getId();
+    public Long save(Posts posts){
+        return postsRepository.save(posts).getId();
     }
 
     @Transactional
@@ -158,6 +157,11 @@ public class PostsService {
             return postsLike.isPresent();
         }
         return false;
+    }
+
+    public Member findMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id=" + memberId));
     }
 
 }
